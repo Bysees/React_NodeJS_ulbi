@@ -8,6 +8,7 @@ const router = require('./routes/index')
 const errorHandler = require('./middleware/ErrorHandlingMiddleware')
 const path = require('path')
 const { urlencoded } = require('express')
+const config = require('./config').Config
 
 const PORT = process.env.PORT || 5000
 
@@ -27,10 +28,13 @@ app.use('/api', router)
 app.use(errorHandler) //! Всегда должен регистрироваться в самом конце
 
 //!deploy
-app.use(express.static(path.join(__dirname, '..', 'client', 'build')))
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'clien', 'build', 'index.html'))
-})
+if (config.production || config.pre_production) {
+  console.log('PRODUCTION STARTED')
+  app.use(express.static(path.join(__dirname, '..', 'client', 'build')))
+  app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'clien', 'build', 'index.html'))
+  })
+}
 //!
 
 const start = async () => {
