@@ -1,0 +1,39 @@
+import { $authHost, $host } from './index'
+
+//! Превратить всё класс
+export const createType = async (type) => {
+  const { data } = await $authHost.post('/api/type', { name: type })
+  return data
+}
+
+export const createBrand = async (brand) => {
+  const { data } = await $authHost.post('/api/brand', { name: brand })
+  return data
+}
+
+export const createDevice = async (device) => {
+  const { data } = await $authHost.post('/api/device', device)
+  return data
+}
+
+export const fetchTypes = async () => {
+  const { data } = await $host.get('/api/type')
+  return data
+}
+
+export const fetchBrands = async () => {
+  const { data } = await $host.get('/api/brand')
+  return data
+}
+
+export const fetchDevices = async (brandId, typeId, limit = 5, page = 1) => {
+  const { data } = await $host.get(`/api/device`, {
+    params: { brandId, typeId, limit, page },
+  })
+  return data
+}
+
+export const fetchOneDevice = async (id) => {
+  const { data } = await $host.get(`/api/device/${id}`)
+  return data
+}
