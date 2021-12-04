@@ -9,7 +9,7 @@ class DeviceController {
       //? Чтобы получать данные с req.body, в начале приложения нужно указать app.use(express.json())
       let { name, price, brandId, typeId, info } = req.body
       const { img } = req.files
-      let fileName = '/' + uuid.v4() + '.jpg'
+      let fileName = uuid.v4() + '.jpg'
 
       //? __dirname Указывает путь до текущей папки.
       //? '..' - поднимает на папку выше.
